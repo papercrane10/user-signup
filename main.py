@@ -43,51 +43,65 @@ def validate():
     username_error1 = ''
     password_error1 = ''
     validation_error1 = ''
+    email_error = ''
     username = request.form['username']
     user_password = request.form['user_password']
     password_confirm = request.form['password_confirm']
     email = str(request.form.get('email')) 
+    test = 0
     
-    #template = jinja_env.get_template('home_login.html')
+    def Is_email(emailaddress): 
+        email = str(emailaddress)
+        length = len(emailaddress.strip)
+        if length < 23 and length > 3 and email.count('@') == 1 and email.count('.') == 1:
+            return True
+        else:
+            return False
+
     #validation
-   
+    
+                
+                
+
+    def is_valid(user_input):
+        length = len(str(user_input))
+        if length > 3:
+            return True
+        else:
+            return False
+
+    if is_valid(username):
+        test += 1
+    else:
+        username_error1 = 'Username not valid'
+    if is_valid(user_password):
+        test += 1
+    else:
+        password_error1 = 'Password not valid'
+    if is_valid(password_confirm):
+        test += 1
+        if str(user_password) == str(password_confirm):
+            test += 1
+        else: 
+            validation_error1 = 'Passwords don\'t match'
+    if len(str(email)) < 0:
+        if Is_email(email):
+            test += 1
+        else: 
+            email_error = 'Email not valid'
+    else:
+        test += 1    
+    
+    if test == 5:
+        return redirect('/greeting?username={0}'.format(username))
+    else: 
+        return render_template('home_login.html', email_error= email_error, username = username,username_error = username_error1, validation_error= validation_error1, password_error = password_error1, user_password = '', password_validation = '')
+    
+    
     
     
     #return form
-    if len(str(username)) > 3:
-        if len(str(user_password)) > 3:
-            if len(str(password_confirm)) > 3:
-                if str(user_password) == str(password_confirm):
-                    if len(str(email)) > 3 and len(str(email))< 20:
-                        if '@' in str(email) and '.' in str(email):
-                            return redirect('/greeting?username={0}'.format(username))
-                        else:
-                            return render_template('home_login.html', email_error = 'Email not valid', username = username)
-                    else:
-                        return redirect('/greeting?username={0}'.format(username))            
-                else:
-                    validation_error1 = 'Passwords don\'t match'
-                    username_error1 = 'Username not valid'
-                    validation_error1 = 'Passwords don\'t match'
-                    return render_template('home_login.html', username = username,username_error = username_error1, validation_error= validation_error1, password_confirm = validation_error1, user_password = '')
-            else: 
-                 password_error1 = 'Password not valid'
-                username_error1 = 'Username not valid'
-                validation_error1 = 'Passwords don\'t match' 
-                return render_template('home_login.html', username = username,username_error = username_error1, validation_error= validation_error1, password_confirm = validation_error1, user_password = '')
-        else:
-            password_error1 = 'Password not valid'
-            username_error1 = 'Username not valid'
-            validation_error1 = 'Passwords don\'t match' 
-            return render_template('home_login.html', username = username, username_error = username_error1, validation_error= validation_error1, password_confirm = validation_error1, user_password = '')
-    else:
-        username_error1 = 'Username not valid' 
-        password_error1 = 'Password not valid' 
-        validation_error1 = 'Passwords don\'t match'
-        return render_template('home_login.html', username = username, username_error = username_error1, validation_error= validation_error1, password_confirm = validation_error1, user_password = '')
-         
-
-
+   
 @app.route("/greeting")
 def greeting():
     username = request.args.get('username') 

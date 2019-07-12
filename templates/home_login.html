@@ -17,28 +17,40 @@
         <h1>Sign Up</h1>
     </header>
     <form method='post'>
-        <label>Username
-        <input type="text" name="username"  placeholder = 'username' value = '{{username}}'><p class="error">{{username_error}}</p>
-        </label>
+        <table>
+            <tbody>
+                <tr>
+                    <td><label>Username</label></td>
+                    <td><input type="text" name="username" placeholder='username' value='{{username}}'>
+                        <span class="error">{{username_error}}</span>
+                    </td>
+                </tr>
 
-        <br>
-        <label>Password 
-            <input name="user_password" type="password"/><p class="error">{{password_error}}</p>
-        </label>
+                <tr>
+                    <td><label>Password</label></td>
+                    <td><input name="user_password" type="password" /><span class="error">{{password_error}}</span></td>
+                </tr>
 
-        <br>
-        <label>Verify Password
-            <input name="password_confirm" type="password"  /><p class="error">{{validation_error}}</p>
-        </label>
+                <tr>
+                    <td><label>Verify Password </label></td>
+                    <td><input name="password_confirm" type="password" />
+                        <span class="error">{{validation_error}}</span>
+                    </td>
 
-        <br>
-        <label>Email (Optional)
-            <input name="email" type="text" placeholder = 'Email' value = '{{email}}' /><p class="error">{{email_error}}</p>
-        </label>
-        <br>
 
+                </tr>
+                <tr>
+                    <td>
+                        <label>Email (Optional)</label></td>
+                    <td><input name="email" type="text" placeholder='Email' value='{{email}}' />
+                        <span class="error">{{email_error}}</span>
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
         <input type="submit" value='Continue' />
-
     </form>
 </body>
 
